@@ -1,5 +1,6 @@
 import express from "express"
 import dotenv from "dotenv"
+import bodyParser from 'body-parser'
 import authRoutes from "../src/routes/auth.route.js"
 import messageRoutes from "../src/routes/message.route.js"
 import { connectDB } from "../src/lib/db.js"
@@ -8,7 +9,11 @@ import cors from "cors"
 
 const app = express()
 dotenv.config()
+//const bodyParser = require("body-parser");
 
+
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
