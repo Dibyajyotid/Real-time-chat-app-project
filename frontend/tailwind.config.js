@@ -17,4 +17,7 @@ export default {
     },
   },
   plugins: [daisyui],
+  daisyui: {
+    themes: ["light", "dark", "corporate", "fantasy","business", "winter"]
+  },
 }

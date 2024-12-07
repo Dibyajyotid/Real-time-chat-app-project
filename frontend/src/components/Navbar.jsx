@@ -15,7 +15,7 @@ const Navbar = () => {
               <div className='size-9 rounded-lg bg-orangy flex items-center justify-center'>
                 <MessageSquare className='size-5 text-white' />
               </div>
-              <h1 className='text-lg font-bold text-white'>ChattApp</h1>
+              <h1 className='text-lg font-bold '>ChattApp</h1>
             </Link>
           </div>
 
@@ -23,7 +23,7 @@ const Navbar = () => {
           <div className='flex items-center gap-2'>
 
             {/* settings button */}
-            <Link to={"/settings"} className={`btn btn-sm gap-2 text-white transition-colors`}>
+            <Link to={"/settings"} className={`btn btn-sm gap-2 transition-colors`}>
               <Settings className='size-4' />
               <span className='hidden sm:inline'>Settings</span>
             </Link>
@@ -32,13 +32,13 @@ const Navbar = () => {
             {authUser && (
               <>
                 {/* Profile button */}
-                <Link to={"/profile"} className={`btn btn-sm gap-2 text-white`}>
+                <Link to={"/profile"} className={`btn btn-sm gap-2`}>
                   <User className='size-5' />
                   <span className='hidden sm:inline'>Profile</span>
                 </Link>
 
                 {/* Logout button */}
-                <button className='flex gap-2 items-center text-white' onClick={logout}>
+                <button className='flex gap-2 items-center' onClick={logout}>
                   <LogOut className='size-5' />
                   <span className='hidden sm:inline'>Logout</span>
                 </button>
