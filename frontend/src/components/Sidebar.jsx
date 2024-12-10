@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useChatStore } from '../store/useChatStore'
 import SidebarSkeleton from './skeletons/SidebarSkeleton'
 import { Users } from 'lucide-react'
@@ -8,10 +8,13 @@ const Sidebar = () => {
     const { getUsers, users, selectedUser, setSelectedUser, isUsersLoading } = useChatStore()
 
     const {onlineUsers} = useAuthStore()
+    const [ showOnlineUsersOnly, setShowOnlineUsersOnly ] = useState(false)
 
     useEffect(() => {
         getUsers()
     }, [getUsers])
+
+    const OnlineFilteredUsers = showOnlineUsersOnly ? users.filter(user => onlineUsers.includes(user._id)) : users;
 
     if(isUsersLoading) return <SidebarSkeleton />
     return (
@@ -23,10 +26,17 @@ const Sidebar = () => {
                 </div>
 
                 {/* Online Filtered Users */}
+                <div className='mt-3 hidden lg:flex items-center gap-2'>
+                    <label className='cursor-pointer flex items-center gap-2'>
+                        <input type='checkbox' checked={showOnlineUsersOnly} onChange={(e) => setShowOnlineUsersOnly(e.target.checked)} className='checkbox checkbox-sm'/>
+                        <span className='text-sm'>Show Online Users Only</span>
+                    </label>
+                    <span className='text-xs text-zinc-300'>({onlineUsers.length - 1} Online)</span>
+                </div>
             </div>
 
             <div className='overflow-y-auto w-full py-3'>
-               {users.map((user) => (
+               {OnlineFilteredUsers.map((user) => (
                 <button key={user._id} onClick={() => setSelectedUser(user)} className={`w-full p-3 flex items-center gap-3 hover:bg-base-300 transition-colors ${selectedUser?._id === user._id ? "bg-base-300 ring-1 ring-base-300" : ""}`}>
                     <div className='relative mx-auto lg:mx-0'>
                         <img src={user.profilePic || "/avatar.png"} alt={user.name} className='size-12 object-cover rounded-full'/>
@@ -43,7 +53,11 @@ const Sidebar = () => {
                         </div>
                     </div>
                 </button>
-               ))} 
+               ))}
+
+               {OnlineFilteredUsers.length === 0 && (
+                <div className='text-center text-zinc-400'>No Online Users</div>
+               )}
             </div>
         </aside>
     )
